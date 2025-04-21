@@ -1,0 +1,8 @@
+import { db } from "../../db/client.js";
+import { badTokensTable } from "../../db/schema.js";
+export const logoutUserService = async (token) => {
+    if (!token) {
+        throw new Error("token not provided");
+    }
+    await db.insert(badTokensTable).values({ token: token });
+};

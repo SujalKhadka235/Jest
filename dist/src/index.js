@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users/user.routes.js";
-import { swaggerUiHandler, swaggerUiMiddleware } from "./swagger.js";
+import { swaggerUiHandler, swaggerUiMiddleware } from "../swagger.js";
 dotenv.config();
 const app = express();
 app.use(express.json());
