@@ -19,7 +19,7 @@ const options = {
         },
         security: [{ bearerAuth: [] }],
     },
-    apis: ["./routes/users/*.ts", "./controllers/users/*.ts"],
+    apis: ["src/routes/users/user.routes.ts", "src/controllers/users/*.ts"],
 };
 export const swaggerSpec = swaggerJSDoc(options);
 export const swaggerUiMiddleware = swaggerUi.serve;

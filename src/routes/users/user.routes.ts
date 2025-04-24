@@ -6,6 +6,7 @@ import { loginUser } from "../../controllers/users/loginUser.controller.js";
 import { logoutUser } from "../../controllers/users/logoutUser.controller.js";
 import { verifyUserToken } from "../../middleware/users/verifyUserToken.middleware.js";
 import { updateUserName } from "../../controllers/users/updateUserName.controller.js";
+import { deleteUser } from "../../controllers/users/deleteUser.controller.js";
 const router: Router = express.Router();
 /**
  * @openapi
@@ -139,6 +140,52 @@ router.put(
   (req: Request, res: Response, next: NextFunction) =>
     verifyUserToken(req, res, next),
   (req: Request, res: Response) => updateUserName(req, res)
+);
+/**
+ * @swagger
+ * /users/delete-user:
+ *   delete:
+ *     summary: Delete a user
+ *     description: Deletes a user account after verifying password and JWT token.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - password
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 example: yourPassword123
+ *     responses:
+ *       200:
+ *         description: User successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: User successfully deleted
+ *       400:
+ *         description: Invalid request body
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Server error
+ */
+router.delete(
+  "/delete-user",
+  (req: Request, res: Response, next: NextFunction) =>
+    verifyUserToken(req, res, next),
+  (req: Request, res: Response) => deleteUser(req, res)
 );
 
 export default router;

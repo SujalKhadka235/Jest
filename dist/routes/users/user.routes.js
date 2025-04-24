@@ -5,6 +5,7 @@ import { loginUser } from "../../controllers/users/loginUser.controller.js";
 import { logoutUser } from "../../controllers/users/logoutUser.controller.js";
 import { verifyUserToken } from "../../middleware/users/verifyUserToken.middleware.js";
 import { updateUserName } from "../../controllers/users/updateUserName.controller.js";
+import { deleteUser } from "../../controllers/users/deleteUser.controller.js";
 const router = express.Router();
 /**
  * @openapi
@@ -125,4 +126,45 @@ router.post("/logout", (req, res, next) => verifyUserToken(req, res, next), (req
  *         description: Unauthorized
  */
 router.put("/change-name", (req, res, next) => verifyUserToken(req, res, next), (req, res) => updateUserName(req, res));
+/**
+ * @swagger
+ * /users/delete-user:
+ *   delete:
+ *     summary: Delete a user
+ *     description: Deletes a user account after verifying password and JWT token.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - password
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 example: yourPassword123
+ *     responses:
+ *       200:
+ *         description: User successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: User successfully deleted
+ *       400:
+ *         description: Invalid request body
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Server error
+ */
+router.delete("/delete-user", (req, res, next) => verifyUserToken(req, res, next), (req, res) => deleteUser(req, res));
 export default router;
