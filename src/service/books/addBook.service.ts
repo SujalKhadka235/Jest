@@ -5,7 +5,6 @@ import { getUserById } from "../user/getUserById.service.js";
 
 export const addBookService = async (
   title: string,
-  issuedDate: Date,
   authorId: number,
   userId: number
 ) => {
@@ -16,5 +15,5 @@ export const addBookService = async (
   }
   return await db
     .insert(booksTable)
-    .values({ title, issuedDate, authorId, userId, statusId: 1 });
+    .values({ title, authorId, userId, statusId: 1 });
 };

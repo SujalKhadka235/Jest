@@ -2,7 +2,7 @@ import { db } from "../../db/client.js";
 import { booksTable } from "../../db/schema.js";
 import { getAuthorById } from "../authors/getAuthorById.service.js";
 import { getUserById } from "../user/getUserById.service.js";
-export const addBookService = async (title, issuedDate, authorId, userId) => {
+export const addBookService = async (title, authorId, userId) => {
     const existingUser = await getUserById(userId);
     const existingAuthor = await getAuthorById(authorId);
     if (!existingAuthor || !existingUser) {
@@ -10,5 +10,5 @@ export const addBookService = async (title, issuedDate, authorId, userId) => {
     }
     return await db
         .insert(booksTable)
-        .values({ title, issuedDate, authorId, userId, statusId: 1 });
+        .values({ title, authorId, userId, statusId: 1 });
 };
