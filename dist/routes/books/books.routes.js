@@ -8,6 +8,8 @@ import { updateBookTitle } from "../../controllers/books/updateBookTitle.control
 import { deleteBook } from "../../controllers/books/deleteBook.controller.js";
 import { rentBook } from "../../controllers/books/rentBook.controller.js";
 import { returnBook } from "../../controllers/books/returnBook.controller.js";
+import { getAvailableBooks } from "../../controllers/books/getAvailableBooks.controller.js";
+import { getBooksByCategory } from "../../controllers/books/getBooksByCategory.Controller.js";
 const router = express.Router();
 /**
  * @openapi
@@ -189,5 +191,11 @@ router.post("/rent/:id", (req, res, next) => verifyUserToken(req, res, next), (r
  */
 router.post("/return/:id", (req, res, next) => verifyUserToken(req, res, next), (req, res) => {
     returnBook(req, res);
+});
+router.get("/available", (req, res) => {
+    getAvailableBooks(req, res);
+});
+router.get("/allBooksByCategory", (req, res) => {
+    getBooksByCategory(req, res);
 });
 export default router;

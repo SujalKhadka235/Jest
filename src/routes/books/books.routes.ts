@@ -11,6 +11,8 @@ import { assignCategoryToBook } from "../../controllers/books/assignCategoryToBo
 import { removeCategoryFromBook } from "../../controllers/books/removeCategoryFromBook.controller.js";
 import { rentBook } from "../../controllers/books/rentBook.controller.js";
 import { returnBook } from "../../controllers/books/returnBook.controller.js";
+import { getAvailableBooks } from "../../controllers/books/getAvailableBooks.controller.js";
+import { getBooksByCategory } from "../../controllers/books/getBooksByCategory.Controller.js";
 
 const router = express.Router();
 
@@ -231,5 +233,10 @@ router.post(
     returnBook(req, res);
   }
 );
-
+router.get("/available", (req: Request, res: Response) => {
+  getAvailableBooks(req, res);
+});
+router.get("/allBooksByCategory", (req: Request, res: Response) => {
+  getBooksByCategory(req, res);
+});
 export default router;

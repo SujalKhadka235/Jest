@@ -27,6 +27,8 @@ const options = {
     "src/controllers/books/*.ts",
     "src/routes/authors/authors.routes.ts",
     "src/controllers/authors/*.ts",
+    "src/routes/reviews/reviews.routes.ts",
+    "src/controllers/reviews/*.ts",
   ],
 };
 
