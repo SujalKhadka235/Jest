@@ -3,8 +3,11 @@
   "compilerOptions": {
     "outDir": "dist",
     "allowJs": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "module": "Node16", // Ensure this is set to Node16
+    "moduleResolution": "Node16", // Ensure this is set to Node16
+    "esModuleInterop": true // Required for Jest compatibility
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/__mocks__"]
 }
