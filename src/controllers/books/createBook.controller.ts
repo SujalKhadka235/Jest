@@ -1,11 +1,12 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 
 import { z } from "zod";
-import { getIdByAuthor } from "../../service/authors/getIdByAuthor.service.js";
+
 import { addBookService } from "../../service/books/addBook.service.js";
+import { assignCategoryToBookService } from "../../service/books/assignCategoryToBook.service.js";
 const createBookSchema = z.object({
   title: z.string().min(1, "title must be at least one charcater long"),
-  author: z.string().min(1, "author name must be at least 1 charcaters long"),
+  category: z.string().optional(),
 });
 export const createBook = async (req: any, res: Response): Promise<void> => {
   const parsed = createBookSchema.safeParse(req.body);
@@ -14,15 +15,14 @@ export const createBook = async (req: any, res: Response): Promise<void> => {
     return;
   }
   try {
-    const { title, author } = parsed.data;
-    const userId = req.user?._id;
-    console.log(userId);
-    if (!userId) {
-      res.status(401).json({ msg: "Unauthorized" });
-      return;
+    const { title, category } = parsed.data;
+
+    const authorId = req.author?._author_id;
+
+    const createdbookId = await addBookService(title, authorId);
+    if (category) {
+      await assignCategoryToBookService(createdbookId, category);
     }
-    const authorId = await getIdByAuthor(author);
-    await addBookService(title, authorId, userId);
     res.status(201).json({ msg: "book has been created" });
     return;
   } catch (err: any) {

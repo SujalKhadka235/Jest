@@ -1,5 +1,5 @@
-import { logoutUserService } from "../../service/user/logoutUser.service.js";
-export const logoutUser = async (req, res) => {
+import { logoutAuthorService } from "../../service/authors/logoutAuthor.service.js";
+export const logoutAuthor = async (req, res) => {
     try {
         const header = req.headers.authorization || req.headers.Authorization;
         if (typeof header !== "string") {
@@ -11,7 +11,7 @@ export const logoutUser = async (req, res) => {
             return;
         }
         const token = header.split(" ")[1];
-        await logoutUserService(token);
+        await logoutAuthorService(token);
         res.status(200).json({ msg: "logged out successfully" });
         return;
     }

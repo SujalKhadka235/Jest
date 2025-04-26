@@ -6,9 +6,7 @@ export const getAllBooks = async (
 ): Promise<void> => {
   try {
     const books = await getAllBooksService();
-    res
-      .status(200)
-      .json({ msg: "All books availabe are as follows", books: books });
+    res.status(200).json({ msg: "All books:", books: books });
     return;
   } catch (err: any) {
     res.status(500).json({ err: err.message });

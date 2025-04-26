@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { assignCategoryToBookService } from "../../service/books/assignCategoryToBook.service.js";
 import { getBookById } from "../../service/books/getBookbyId.service.js";
-const assignCategorytoBookSchema = z.object({
-    category: z.string().min(1, "category must be at least one character long"),
+import { removeCategoryFromBookService } from "../../service/books/removeCategoryfromBook.service.js";
+const removeCategoryFromBookSchema = z.object({
+    category: z.string().min(1, "Category must be at least one character long"),
 });
-export const assignCategoryToBook = async (req, res) => {
-    const parsed = assignCategorytoBookSchema.safeParse(req.body);
+export const removeCategoryFromBook = async (req, res) => {
+    const parsed = removeCategoryFromBookSchema.safeParse(req.body);
     if (!parsed.success) {
-        res.status(400).json({ msg: "invalid request" });
+        res.status(400).json({ msg: "Invalid request" });
         return;
     }
     try {
@@ -20,13 +20,13 @@ export const assignCategoryToBook = async (req, res) => {
         const book = await getBookById(bookIdFromParams);
         if (book.authorId !== author_id) {
             res.status(403).json({
-                msg: "You are unauthorized to assign a category to this book",
+                msg: "You are unauthorized to remove a category from this book",
             });
             return;
         }
         const { category } = parsed.data;
-        await assignCategoryToBookService(bookIdFromParams, category);
-        res.status(200).json({ msg: "Category has been assigned to the book" });
+        await removeCategoryFromBookService(bookIdFromParams, category);
+        res.status(200).json({ msg: "Category has been removed from the book" });
     }
     catch (err) {
         res.status(500).json({ err: err.message });

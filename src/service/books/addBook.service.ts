@@ -1,19 +1,15 @@
 import { db } from "../../db/client.js";
 import { booksTable } from "../../db/schema.js";
 import { getAuthorById } from "../authors/getAuthorById.service.js";
-import { getUserById } from "../user/getUserById.service.js";
 
-export const addBookService = async (
-  title: string,
-  authorId: number,
-  userId: number
-) => {
-  const existingUser = await getUserById(userId);
+export const addBookService = async (title: string, authorId: number) => {
   const existingAuthor = await getAuthorById(authorId);
-  if (!existingAuthor || !existingUser) {
+  if (!existingAuthor) {
     throw new Error("Error");
   }
-  return await db
+  const createdbookId = await db
     .insert(booksTable)
-    .values({ title, authorId, userId: userId, statusId: 1 });
+    .values({ title, authorId, statusId: 1 })
+    .$returningId();
+  return createdbookId[0].id;
 };

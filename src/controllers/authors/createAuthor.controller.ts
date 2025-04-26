@@ -1,28 +1,31 @@
-import { Request, RequestHandler, Response } from "express";
+import { Request, Response } from "express";
 import { z } from "zod";
 
-import { createUserService } from "../../service/user/createUser.service.js";
-const createUserSchema = z.object({
+import { createAuthorService } from "../../service/authors/createAuthor.service.js";
+const createAuthorSchema = z.object({
   name: z.string().min(1, "name should be at least one character long"),
   email: z.string().email("invalid email"),
   password: z.string().min(1, "password should be at least one character long"),
 });
-export const createUser = async (
+export const createAuthor = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   const data = req.body;
-  const parsed = createUserSchema.safeParse(data);
+  const parsed = createAuthorSchema.safeParse(data);
   if (!parsed.success) {
     res.status(400).json({ msg: "invalid request" });
     return;
   }
   try {
     const { name, email, password } = parsed.data;
-    const createdUserId = await createUserService(name, email, password);
+    const createdAuthorId = await createAuthorService(name, email, password);
     res
       .status(201)
-      .json({ msg: "User has been created", createdUserId: createdUserId });
+      .json({
+        msg: "Author has been created",
+        createdAuthorId: createdAuthorId,
+      });
     return;
   } catch (err: any) {
     res.status(500).json({ msg: "internal server error", err: err.message });

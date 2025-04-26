@@ -1,7 +1,9 @@
 import { z } from "zod";
 import { addBookCategory } from "../../service/books/addBookCategory.service.js";
 const createBookCategorySchema = z.object({
-    name: z.string().min(1, "category name must be at least one character long"),
+    category: z
+        .string()
+        .min(1, "category name must be at least one character long"),
 });
 export const createBookCategory = async (req, res) => {
     const parsed = createBookCategorySchema.safeParse(req.body);
@@ -10,8 +12,8 @@ export const createBookCategory = async (req, res) => {
         return;
     }
     try {
-        const { name } = parsed.data;
-        await addBookCategory(name);
+        const { category } = parsed.data;
+        await addBookCategory(category);
         res.status(201).json({ msg: "Book category has been created" });
     }
     catch (err) {

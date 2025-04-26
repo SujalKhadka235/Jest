@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 
-import { badTokensTable } from "../../db/schema.js";
-import { logoutUserService } from "../../service/user/logoutUser.service.js";
+import { logoutAuthorService } from "../../service/authors/logoutAuthor.service.js";
 
-export const logoutUser = async (
+export const logoutAuthor = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -18,7 +17,7 @@ export const logoutUser = async (
       return;
     }
     const token = header.split(" ")[1];
-    await logoutUserService(token);
+    await logoutAuthorService(token);
     res.status(200).json({ msg: "logged out successfully" });
     return;
   } catch (err: any) {

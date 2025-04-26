@@ -1,23 +1,23 @@
 import { eq } from "drizzle-orm";
 import { db } from "../../db/client.js";
-import { usersTable } from "../../db/schema.js";
+import { authorsTable } from "../../db/schema.js";
 import bcrypt from "bcryptjs";
-export const createUserService = async (
+export const createAuthorService = async (
   name: string,
   email: string,
   password: string
 ) => {
   const isEmailAlreadyTaken = await db
     .select()
-    .from(usersTable)
-    .where(eq(usersTable.email, email));
+    .from(authorsTable)
+    .where(eq(authorsTable.email, email));
   if (isEmailAlreadyTaken.length > 0) {
     throw new Error("Email is already taken");
   }
   const hashedPassword = await bcrypt.hash(password, 10);
-  const createdUserId = await db
-    .insert(usersTable)
+  const createdAuthorId = await db
+    .insert(authorsTable)
     .values({ name, email, password: hashedPassword })
     .$returningId();
-  return createdUserId;
+  return createdAuthorId;
 };
