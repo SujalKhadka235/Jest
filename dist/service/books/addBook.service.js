@@ -10,5 +10,5 @@ export const addBookService = async (title, authorId, userId) => {
     }
     return await db
         .insert(booksTable)
-        .values({ title, authorId, userId, statusId: 1 });
+        .values({ title, authorId, userId: userId, statusId: 1 });
 };

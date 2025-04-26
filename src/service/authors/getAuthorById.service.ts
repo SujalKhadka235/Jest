@@ -5,7 +5,7 @@ export const getAuthorById = async (id: number) => {
   const existingAuthor = await db
     .select()
     .from(authorsTable)
-    .where(eq(usersTable.id, id));
+    .where(eq(authorsTable.id, id));
   if (existingAuthor.length === 0) {
     throw new Error("author id provided does not exist");
   }

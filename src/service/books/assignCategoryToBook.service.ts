@@ -3,7 +3,7 @@ import { bookToCategoryTable } from "../../db/schema.js";
 import { getBookById } from "./getBookbyId.service.js";
 import { getCategoryIdByName } from "./getCategoryidByname.service.js";
 
-export const assignCategoryToBook = async (
+export const assignCategoryToBookService = async (
   book_id: number,
   category: string
 ) => {

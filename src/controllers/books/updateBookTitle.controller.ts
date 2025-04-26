@@ -4,7 +4,7 @@ import { z } from "zod";
 import { getBookById } from "../../service/books/getBookbyId.service.js";
 import { updateBookTitleService } from "../../service/books/updateBookTitle.service.js";
 const updateBookTitleSchema = z.object({
-  book_id: z.number().min(1),
+  book_id: z.number(),
   title: z.string().min(1, "title must be at least one charcater long"),
 });
 export const updateBookTitle = async (

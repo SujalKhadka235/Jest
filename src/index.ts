@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users/user.routes.js";
+import bookRoutes from "./routes/books/books.routes.js";
 import { swaggerUiHandler, swaggerUiMiddleware } from "./swagger.js";
 dotenv.config();
 const app = express();
@@ -9,6 +10,7 @@ app.use("/api-docs", swaggerUiMiddleware, swaggerUiHandler);
 const port: number = Number(process.env.PORT) || 3000;
 
 app.use("/users", userRoutes);
+app.use("/books", bookRoutes);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello how are you");
 });
