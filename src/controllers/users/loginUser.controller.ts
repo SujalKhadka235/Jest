@@ -18,7 +18,6 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     if (!token) {
       throw new Error("Login failed");
     }
-    console.log("Returning token:", token);
     res.status(201).json({ message: "sucessfully logged in", token: token });
     return;
   } catch (err: any) {

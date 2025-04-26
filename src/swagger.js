@@ -5,9 +5,9 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "User API",
+      title: "Library API",
       version: "1.0.0",
-      description: "Simple User API with Swagger",
+      description: "API documentation for Users, Books, and Authors",
     },
     components: {
       securitySchemes: {
@@ -20,7 +20,14 @@ const options = {
     },
     security: [{ bearerAuth: [] }],
   },
-  apis: ["src/routes/users/user.routes.ts", "src/controllers/users/*.ts"],
+  apis: [
+    "src/routes/users/user.routes.ts",
+    "src/controllers/users/*.ts",
+    "src/routes/books/books.routes.ts",
+    "src/controllers/books/*.ts",
+    "src/routes/authors/authors.routes.ts",
+    "src/controllers/authors/*.ts",
+  ],
 };
 
 export const swaggerSpec = swaggerJSDoc(options);
