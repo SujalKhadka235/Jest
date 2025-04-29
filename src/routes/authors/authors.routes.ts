@@ -4,6 +4,7 @@ import { createAuthor } from "../../controllers/authors/createAuthor.controller.
 import { loginAuthor } from "../../controllers/authors/loginAuthor.controller.js";
 import { verifyAuthorToken } from "../../middleware/authors/verifyAuthorToken.middleware.js";
 import { logoutAuthor } from "../../controllers/authors/logoutAuthor.controller.js";
+import { getAuthorProfile } from "../../controllers/authors/getAuthorProfile.controller.js";
 
 const router = express.Router();
 
@@ -93,6 +94,14 @@ router.post(
     verifyAuthorToken(req, res, next),
   (req: Request, res: Response) => {
     logoutAuthor(req, res);
+  }
+);
+router.post(
+  "/profile",
+  (req: Request, res: Response, next: NextFunction) =>
+    verifyAuthorToken(req, res, next),
+  (req: Request, res: Response) => {
+    getAuthorProfile(req, res);
   }
 );
 

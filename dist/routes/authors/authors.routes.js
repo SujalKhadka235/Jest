@@ -3,6 +3,7 @@ import { createAuthor } from "../../controllers/authors/createAuthor.controller.
 import { loginAuthor } from "../../controllers/authors/loginAuthor.controller.js";
 import { verifyAuthorToken } from "../../middleware/authors/verifyAuthorToken.middleware.js";
 import { logoutAuthor } from "../../controllers/authors/logoutAuthor.controller.js";
+import { getAuthorProfile } from "../../controllers/authors/getAuthorProfile.controller.js";
 const router = express.Router();
 /**
  * @openapi
@@ -84,5 +85,8 @@ router.post("/login", (req, res) => {
  */
 router.post("/logout", (req, res, next) => verifyAuthorToken(req, res, next), (req, res) => {
     logoutAuthor(req, res);
+});
+router.post("/profile", (req, res, next) => verifyAuthorToken(req, res, next), (req, res) => {
+    getAuthorProfile(req, res);
 });
 export default router;
